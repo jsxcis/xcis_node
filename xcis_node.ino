@@ -1,4 +1,3 @@
-
 #include <RHRouter.h>
 #include <RHMesh.h>
 #include <RH_RF95.h>
@@ -10,12 +9,14 @@ RHMesh *manager;
 //unsigned long delayStart = 0; // the time the delay started
 //bool delayRunning = false; // true if still waiting for delay to finish
 //unsigned long DELAY_TIME = 5000; // 5 sec
-//SoftwareSerial mySerial(2, 3);
+SoftwareSerial usonic(A4, A5);//SDA,SCL-  RX, TX
+unsigned long delayStart = 0; // the time the delay started
+bool delayRunning = 0; // true if still waiting for delay to finish
 
+float distance;
 
 void setup()
 {
-   
    pinMode(5, OUTPUT);
    digitalWrite(5, 1);
   // manual reset
@@ -24,18 +25,25 @@ void setup()
   digitalWrite(5, 1);
   delay(10);
 
-  manager = new RHMesh(rf95, 2);
+  manager = new RHMesh(rf95, 1); // Node ID
   Serial.begin(115200);
-  if (!manager->init())
-  {
-    Serial.println(F("init failed"));
-  } 
-  rf95.setFrequency(915.0);
-  Serial.println(F("Lora Mesh Sensor1 Ready"));
+  manager->init();
+ 
+  delayStart = millis();   // start delay
+  delayRunning = true; // not finished yet
+  Serial.println(F("Ready"));
+  usonic.begin(9600);
 }
 
 void loop()
 {
+  // check if delay has timed out after 10sec == DELAY_TIME
+  if (delayRunning && ((millis() - delayStart) >= 5000))
+  {
+    delayStart += 5000; // 5 secs
+    readDataStream();
+  }
+
   // parse for a packet, and call onReceive with the result:
   if (onReceive())
   {
