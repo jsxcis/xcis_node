@@ -7,7 +7,7 @@ bool onReceive()
   {
     //Serial.println((char*)buf);
     // Assume message is for me.
-    String response = "ID=01,Name=Azabu1,Value=" + String(distance) + ",";
+    String response = "ID=04,Name=Azabu4,Value=" + String(distance) + ",";
     Serial.println(response);
     sendMessage(response, from);
   }

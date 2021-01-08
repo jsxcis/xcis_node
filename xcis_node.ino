@@ -25,7 +25,7 @@ void setup()
   digitalWrite(5, 1);
   delay(10);
 
-  manager = new RHMesh(rf95, 1); // Node ID
+  manager = new RHMesh(rf95, 4); // Node ID
   Serial.begin(115200);
   manager->init();
  
