@@ -2,11 +2,13 @@ void readDataStream()
 {
 
   Serial.println(F("readDataStream()"));
+  digitalWrite(A1,1);
   unsigned char data[4]={};
   unsigned char incomingByte = 0;
   int byteCount = 0;
   bool foundPacket = false;
-  while (usonic.available() > 0) {
+  while (usonic.available() > 0) 
+  {
     // read the incoming byte:
     incomingByte = usonic.read();
     if (incomingByte == 0xFF)
@@ -42,5 +44,6 @@ void readDataStream()
       Serial.println(F("ERROR"));
     }
   }
+  digitalWrite(A1,0);
 
 }
