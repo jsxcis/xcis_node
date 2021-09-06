@@ -8,7 +8,7 @@ bool onReceive()
     //Serial.println((char*)buf);
     // Assume message is for me.
     digitalWrite(A2,0); 
-    String response = "ID=04,Name=Rosedale4,Value=" + String(distance) + ",";
+    String response = "ID=10,Name=Rosedale4,Value=" + String(distance) + ",B=" + getVoltage().substring(0,3)+ "," ;
     Serial.println(response);
     sendMessage(response, from);
     digitalWrite(A2,1);

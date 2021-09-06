@@ -13,6 +13,8 @@ bool delayRunning = 0; // true if still waiting for delay to finish
 
 float distance;
 int defaultSwitchPress = 0;
+// Analog PIN for Battery input
+#define BATTERY_VOLTAGE A0
 
 void setup()
 {
@@ -32,7 +34,7 @@ void setup()
   digitalWrite(5, 1);
   delay(10);
 
-  manager = new RHMesh(rf95, 4); // Node ID - NEED TO SET THIS
+  manager = new RHMesh(rf95, 10); // Node ID - NEED TO SET THIS
   Serial.begin(115200);
   manager->init();
  
